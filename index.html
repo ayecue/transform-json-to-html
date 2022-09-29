@@ -1,0 +1,39 @@
+<html style="background-color: #000;">
+  <head>
+    <script src="dist/index.umd.js" charset="UTF-8"></script>
+    <link rel="stylesheet" type="text/css" href="dist/index.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+  <footer>
+    <script>
+      const obj = {
+        test: 'was',
+        moo: [
+          'foo',
+          'bar'
+        ],
+        inner: {
+          'bar': 1,
+          inner: {
+            'foo': 2
+          },
+          inner2: new Map([['test', 'x']]),
+          inner3: new Set(['was', 'wo'])
+        },
+        map: new Map([['test', 'x']]),
+        set: new Set(['was', 'wo'])
+      };
+
+      obj.cyclic = obj;
+
+      const item = transformJSONToHTML(obj, {
+        theme: 'dark',
+        depth: 4
+      });
+      
+      document.getElementById('root').appendChild(item);
+    </script>
+  </footer>
+</html>
