@@ -25,7 +25,8 @@
         map: new Map([['test', 'x']]),
         set: new Set(['was', 'wo']),
         x1: undefined,
-        x2: null
+        x2: null,
+        toBigArray: new Array(150).fill('x').map((v, i) => v + i)
       };
 
       obj.cyclic = obj;

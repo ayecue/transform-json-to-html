@@ -161,6 +161,8 @@ function generateArrayType(
 
     if (index > itemLimit) {
       line.appendChild(generateEOL());
+      body.appendChild(line);
+      break;
     } else {
       const v = document.createElement('span');
 
@@ -218,6 +220,8 @@ function generateSetType(
 
     if (index > itemLimit) {
       line.appendChild(generateEOL());
+      body.appendChild(line);
+      break;
     } else {
       const v = document.createElement('span');
 
@@ -276,6 +280,8 @@ function generateMapType(
 
     if (index > itemLimit) {
       line.appendChild(generateEOL());
+      body.appendChild(line);
+      break;
     } else {
       const left = document.createElement('span');
       const sep = document.createElement('span');
@@ -341,6 +347,8 @@ function generateObjectType(
 
     if (index > itemLimit) {
       line.appendChild(generateEOL());
+      body.appendChild(line);
+      break;
     } else {
       const left = document.createElement('span');
       const sep = document.createElement('span');

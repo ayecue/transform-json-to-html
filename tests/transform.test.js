@@ -67,4 +67,55 @@ describe('transform', function () {
     });
     expect(result).toMatchSnapshot();
   });
+
+  test('too big array', function() {
+    const result = transform({
+      toBigArray: new Array(150).fill('x').map((v, i) => v + i)
+    }, {
+      itemLimit: 10
+    });
+    expect(result).toMatchSnapshot();
+  });
+
+  test('too big object', function() {
+    const arr = new Array(150).fill('x').map((v, i) => v + i);
+    const obj = {};
+
+    for (const item of arr) {
+      obj[item] = 'v' + item;
+    }
+
+    const result = transform(obj, {
+      itemLimit: 10
+    });
+    expect(result).toMatchSnapshot();
+  });
+
+  test('too big map', function() {
+    const arr = new Array(150).fill('x').map((v, i) => v + i);
+    const obj = new Map();
+
+    for (const item of arr) {
+      obj.set(item, 'v' + item);
+    }
+
+    const result = transform(obj, {
+      itemLimit: 10
+    });
+    expect(result).toMatchSnapshot();
+  });
+
+  test('too big set', function() {
+    const arr = new Array(150).fill('x').map((v, i) => v + i);
+    const obj = new Set();
+
+    for (const item of arr) {
+      obj.add(item);
+    }
+
+    const result = transform(obj, {
+      itemLimit: 10
+    });
+    expect(result).toMatchSnapshot();
+  });
 });
