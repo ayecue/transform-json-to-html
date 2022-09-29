@@ -8,3 +8,6 @@ dist/index.less
 dist/index.js
 dist/index.css
 index.html
+.eslintrc
+.editorconfig
+rollup.config.js

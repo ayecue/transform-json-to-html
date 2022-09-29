@@ -1,6 +1,6 @@
 {
     "name": "transform-json-to-html",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "description": "Transformer for TextMesh Rich Text tags",
     "homepage": "https://github.com/ayecue/transform-json-to-html",
     "main": "dist/index.cjs.js",
@@ -18,7 +18,7 @@
     "licenses": [
         {
             "type": "MIT",
-            "url": "https://github.com/ayecue/transform-json-to-html/blob/master/LICENSE-MIT"
+            "url": "https://github.com/ayecue/transform-json-to-html/blob/master/LICENSE"
         }
     ],
     "bugs": {
