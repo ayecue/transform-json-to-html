@@ -36,7 +36,7 @@ const obj = {
 
 obj.cyclic = obj;
 
-const item = transformJSONToHTML(obj, {
+const item = transform(obj, {
   depth: 4
 });
 
@@ -45,7 +45,7 @@ document.getElementById('root').appendChild(item);
 
 # API
 
-`transformJSONToHTML(object [, options])`
+`transform(object [, options])`
 
 * `object` - Any object you want to transform into HTML.
 * `options` - Optional argument to define options.
