@@ -22,7 +22,8 @@ const options = {
     ],
     plugins: [
         less({
-            output: 'dist/index.css'
+            output: 'dist/index.css',
+            insert: true
         }),
         commonjs(),
         babel({

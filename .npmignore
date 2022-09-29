@@ -6,4 +6,5 @@ tests
 test.js
 dist/index.less
 dist/index.js
+dist/index.css
 index.html
