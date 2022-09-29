@@ -379,25 +379,27 @@ export function transform(
   const onCollapse =
     options.onCollapse || DEFAULT_ON_COLLAPSE_CALLBACK_FACTORY();
   const generate = (item: any, depth: number = 0): HTMLElement => {
+    item = parseItem(item);
+
     const itemType = typeof item;
     const nextDepth = depth + 1;
 
     switch (itemType) {
       case SupportedTypes.Undefined:
-        return generatePrimitiveType(SupportedTypes.Undefined, parseItem(item));
+        return generatePrimitiveType(SupportedTypes.Undefined, item);
       case SupportedTypes.Function:
-        return generatePrimitiveType(SupportedTypes.Function, parseItem(item));
+        return generatePrimitiveType(SupportedTypes.Function, item);
       case SupportedTypes.String:
-        return generatePrimitiveType(SupportedTypes.String, parseItem(item));
+        return generatePrimitiveType(SupportedTypes.String, item);
       case SupportedTypes.Number:
-        return generatePrimitiveType(SupportedTypes.Number, parseItem(item));
+        return generatePrimitiveType(SupportedTypes.Number, item);
       case SupportedTypes.Boolean:
-        return generatePrimitiveType(SupportedTypes.Boolean, parseItem(item));
+        return generatePrimitiveType(SupportedTypes.Boolean, item);
       case SupportedTypes.Object: {
         if (item === null) {
           return generatePrimitiveType(
             SupportedTypes.Null,
-            parseItem(item) || 'null'
+            'null'
           );
         }
 
@@ -407,7 +409,7 @@ export function transform(
         if (Array.isArray(item)) {
           if (nextDepth > maxDepth) return generateWrappedEOL('[', ']');
           return generateArrayType(
-            parseItem(item),
+            item,
             isCollapsed,
             itemLimit,
             onCollapse,
@@ -416,7 +418,7 @@ export function transform(
         } else if (item instanceof Map) {
           if (nextDepth > maxDepth) return generateWrappedEOL('{', '}', 'Map');
           return generateMapType(
-            parseItem(item),
+            item,
             isCollapsed,
             itemLimit,
             onCollapse,
@@ -425,7 +427,7 @@ export function transform(
         } else if (item instanceof Set) {
           if (nextDepth > maxDepth) return generateWrappedEOL('{', '}', 'Set');
           return generateSetType(
-            parseItem(item),
+            item,
             isCollapsed,
             itemLimit,
             onCollapse,
@@ -435,7 +437,7 @@ export function transform(
 
         if (nextDepth > maxDepth) return generateWrappedEOL('{', '}');
         return generateObjectType(
-          parseItem(item),
+          item,
           isCollapsed,
           itemLimit,
           onCollapse,

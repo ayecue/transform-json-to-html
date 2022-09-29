@@ -1,6 +1,6 @@
 {
     "name": "transform-json-to-html",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "description": "Transformer for TextMesh Rich Text tags",
     "homepage": "https://github.com/ayecue/transform-json-to-html",
     "main": "dist/index.cjs.js",
