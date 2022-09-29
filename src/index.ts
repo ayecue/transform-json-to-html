@@ -344,7 +344,7 @@ export interface TransformOptions {
   theme: Theme;
 }
 
-export default function (
+export function transform(
   json: any,
   options: Partial<TransformOptions> = {}
 ): HTMLDivElement {

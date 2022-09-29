@@ -28,7 +28,7 @@
 
       obj.cyclic = obj;
 
-      const item = transformJSONToHTML(obj, {
+      const item = transformJSONToHTML.transform(obj, {
         theme: 'dark',
         depth: 4
       });

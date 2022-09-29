@@ -4,11 +4,11 @@ const dom = new JSDOM();
 global.document = dom.window.document
 global.window = dom.window
 
-const transformJsonToHtml = require('../dist/index.cjs.js');
+const { transform } = require('../dist/index.cjs.js');
 
 describe('transform', function () {
   test('simple', function () {
-    const result = transformJsonToHtml({
+    const result = transform({
       test: 'was'
     });
 
@@ -36,13 +36,13 @@ describe('transform', function () {
 
     obj.cyclic = obj;
 
-    const result = transformJsonToHtml(obj);
+    const result = transform(obj);
 
     expect(result).toMatchSnapshot();
   });
 
   test('primitive', function() {
-    const result = transformJsonToHtml("test");
+    const result = transform("test");
     expect(result).toMatchSnapshot();
   });
 });
