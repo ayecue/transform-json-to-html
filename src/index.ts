@@ -292,6 +292,13 @@ function generateMapType(
       line.appendChild(left);
       line.appendChild(sep);
       line.appendChild(right);
+
+      if (value.size - 1 > index) {
+        const sep = document.createElement('span');
+        sep.classList.add(getClassName('seperator'));
+        sep.innerHTML = ',';
+        line.appendChild(sep);
+      }
     }
 
     body.appendChild(line);
@@ -350,6 +357,13 @@ function generateObjectType(
       line.appendChild(left);
       line.appendChild(sep);
       line.appendChild(right);
+
+      if (keys.length - 1 > index) {
+        const sep = document.createElement('span');
+        sep.classList.add(getClassName('seperator'));
+        sep.innerHTML = ',';
+        line.appendChild(sep);
+      }
     }
 
     body.appendChild(line);
@@ -386,7 +400,7 @@ export function transform(
 
     switch (itemType) {
       case SupportedTypes.Undefined:
-        return generatePrimitiveType(SupportedTypes.Undefined, item);
+        return generatePrimitiveType(SupportedTypes.Undefined, 'undefined');
       case SupportedTypes.Function:
         return generatePrimitiveType(SupportedTypes.Function, item);
       case SupportedTypes.String:
@@ -397,10 +411,7 @@ export function transform(
         return generatePrimitiveType(SupportedTypes.Boolean, item);
       case SupportedTypes.Object: {
         if (item === null) {
-          return generatePrimitiveType(
-            SupportedTypes.Null,
-            'null'
-          );
+          return generatePrimitiveType(SupportedTypes.Null, 'null');
         }
 
         const isCollapsed = collapseDepth < nextDepth;

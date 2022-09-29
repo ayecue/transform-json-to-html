@@ -59,4 +59,12 @@ describe('transform', function () {
     });
     expect(result).toMatchSnapshot();
   });
+
+  test('null + undefined', function() {
+    const result = transform({
+      bar1: undefined,
+      bar2: null
+    });
+    expect(result).toMatchSnapshot();
+  });
 });

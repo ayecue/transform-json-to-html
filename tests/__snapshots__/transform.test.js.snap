@@ -42,6 +42,11 @@ exports[`transform cyclic 1`] = `
               was
             </span>
           </span>
+          <span
+            class="json-html-seperator"
+          >
+            ,
+          </span>
         </li>
         <li>
           <span
@@ -111,6 +116,11 @@ exports[`transform cyclic 1`] = `
               </span>
             </div>
           </span>
+          <span
+            class="json-html-seperator"
+          >
+            ,
+          </span>
         </li>
         <li>
           <span
@@ -168,6 +178,11 @@ exports[`transform cyclic 1`] = `
                         1
                       </span>
                     </span>
+                    <span
+                      class="json-html-seperator"
+                    >
+                      ,
+                    </span>
                   </li>
                   <li>
                     <span
@@ -206,6 +221,11 @@ exports[`transform cyclic 1`] = `
                           }
                         </span>
                       </span>
+                    </span>
+                    <span
+                      class="json-html-seperator"
+                    >
+                      ,
                     </span>
                   </li>
                   <li>
@@ -250,6 +270,11 @@ exports[`transform cyclic 1`] = `
                           }
                         </span>
                       </span>
+                    </span>
+                    <span
+                      class="json-html-seperator"
+                    >
+                      ,
                     </span>
                   </li>
                   <li>
@@ -304,6 +329,11 @@ exports[`transform cyclic 1`] = `
                 }
               </span>
             </div>
+          </span>
+          <span
+            class="json-html-seperator"
+          >
+            ,
           </span>
         </li>
         <li>
@@ -376,6 +406,11 @@ exports[`transform cyclic 1`] = `
                 }
               </span>
             </div>
+          </span>
+          <span
+            class="json-html-seperator"
+          >
+            ,
           </span>
         </li>
         <li>
@@ -451,6 +486,11 @@ exports[`transform cyclic 1`] = `
               </span>
             </div>
           </span>
+          <span
+            class="json-html-seperator"
+          >
+            ,
+          </span>
         </li>
         <li>
           <span
@@ -508,6 +548,11 @@ exports[`transform cyclic 1`] = `
                         was
                       </span>
                     </span>
+                    <span
+                      class="json-html-seperator"
+                    >
+                      ,
+                    </span>
                   </li>
                   <li>
                     <span
@@ -547,6 +592,11 @@ exports[`transform cyclic 1`] = `
                         </span>
                       </span>
                     </span>
+                    <span
+                      class="json-html-seperator"
+                    >
+                      ,
+                    </span>
                   </li>
                   <li>
                     <span
@@ -585,6 +635,11 @@ exports[`transform cyclic 1`] = `
                           }
                         </span>
                       </span>
+                    </span>
+                    <span
+                      class="json-html-seperator"
+                    >
+                      ,
                     </span>
                   </li>
                   <li>
@@ -630,6 +685,11 @@ exports[`transform cyclic 1`] = `
                         </span>
                       </span>
                     </span>
+                    <span
+                      class="json-html-seperator"
+                    >
+                      ,
+                    </span>
                   </li>
                   <li>
                     <span
@@ -673,6 +733,11 @@ exports[`transform cyclic 1`] = `
                           }
                         </span>
                       </span>
+                    </span>
+                    <span
+                      class="json-html-seperator"
+                    >
+                      ,
                     </span>
                   </li>
                   <li>
@@ -722,6 +787,90 @@ exports[`transform cyclic 1`] = `
                 }
               </span>
             </div>
+          </span>
+        </li>
+      </ul>
+    </div>
+    <span
+      class="json-html-end-bracket"
+    >
+      }
+    </span>
+  </div>
+</div>
+`;
+
+exports[`transform null + undefined 1`] = `
+<div
+  class="json-html-container json-html-default"
+>
+  <div
+    class="json-html-object"
+  >
+    <span
+      class="json-html-start-bracket"
+    >
+      {
+    </span>
+    <div
+      class="json-html-body-container"
+    >
+      <ul
+        class="json-html-body"
+      >
+        <li>
+          <span
+            class="json-html-key"
+          >
+            <span
+              class="json-html-string"
+            >
+              bar1
+            </span>
+          </span>
+          <span
+            class="json-html-seperator"
+          >
+            :
+          </span>
+          <span
+            class="json-html-value"
+          >
+            <span
+              class="json-html-undefined"
+            >
+              undefined
+            </span>
+          </span>
+          <span
+            class="json-html-seperator"
+          >
+            ,
+          </span>
+        </li>
+        <li>
+          <span
+            class="json-html-key"
+          >
+            <span
+              class="json-html-string"
+            >
+              bar2
+            </span>
+          </span>
+          <span
+            class="json-html-seperator"
+          >
+            :
+          </span>
+          <span
+            class="json-html-value"
+          >
+            <span
+              class="json-html-null"
+            >
+              null
+            </span>
           </span>
         </li>
       </ul>
