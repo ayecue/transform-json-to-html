@@ -26,7 +26,11 @@
         set: new Set(['was', 'wo']),
         x1: undefined,
         x2: null,
-        toBigArray: new Array(150).fill('x').map((v, i) => v + i)
+        toBigArray: new Array(150).fill('x').map((v, i) => v + i),
+        toBigObject: new Array(150).fill('x').map((v, i) => v + i).reduce((r, v) => {
+          r[v] = 'v' + v;
+          return r;
+        }, {})
       };
 
       obj.cyclic = obj;
@@ -36,7 +40,8 @@
         depth: 4,
         onCollapse: (ev, item) => {
           console.log('collapse event', ev, item);
-        }
+        },
+        itemLimit: 20
       });
       
       document.getElementById('root').appendChild(item);
