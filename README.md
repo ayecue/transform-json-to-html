@@ -15,7 +15,7 @@ Transform JSON into a HTML tree. Inspired by [json-formatter-js](https://github.
 # Usage
 
 ```js
-const { transform } = r
+const { transform } = require('transform-json-to-html')
 const obj = {
   test: 'was',
   moo: [
