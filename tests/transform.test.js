@@ -45,4 +45,18 @@ describe('transform', function () {
     const result = transform("test");
     expect(result).toMatchSnapshot();
   });
+
+  test('use parseItem', function() {
+    const result = transform({
+      test: 'was'
+    }, {
+      parseItem: (v) => {
+        if (typeof v === 'string') {
+          return v + 'modified!!!'
+        }
+        return v;
+      }
+    });
+    expect(result).toMatchSnapshot();
+  });
 });

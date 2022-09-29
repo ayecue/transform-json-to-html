@@ -30,7 +30,10 @@
 
       const item = transformJSONToHTML.transform(obj, {
         theme: 'dark',
-        depth: 4
+        depth: 4,
+        onCollapse: (ev, item) => {
+          console.log('collapse event', ev, item);
+        }
       });
       
       document.getElementById('root').appendChild(item);

@@ -15,6 +15,7 @@ Transform JSON into a HTML tree. Inspired by [json-formatter-js](https://github.
 # Usage
 
 ```js
+const { transform } = r
 const obj = {
   test: 'was',
   moo: [
@@ -52,16 +53,20 @@ document.getElementById('root').appendChild(item);
   * `itemLimit` - Limit of items to display of value.
   * `collapseDepth` - Depth from where items should be collapsed by default.
   * `theme` - CSS theme to use.
+  * `parseItem` - Parse item.
+  * `onCollapse` - Callback for collapse event.
 
 Returns HTMLElement.
 
 ## Default options:
 
-```json
+```js
 {
   "depth": 2,
   "itemLimit": 100,
   "collapseDepth": 2,
-  "theme": "default"
+  "theme": "default",
+  "parseItem": (v) => v;
+  "onCollapse": (ev) => {};
 }
 ```

@@ -1,9 +1,7 @@
 import './index.less';
 
-export const TRANSFORM_CLASSNAME_PREFIX = 'json-html';
-export const DEFAULT_MAX_DEPTH = 2;
-export const DEFAULT_ITEM_LIMIT = 100;
-export const DEFAULT_COLLAPSE_DEPTH = 2;
+export type ParseItemCallback = (item: any) => any;
+export type OnCollapseCallback = (ev: Event, item: HTMLElement) => void;
 
 export enum Theme {
   Dark = 'dark',
@@ -19,8 +17,21 @@ export enum SupportedTypes {
   Map = 'map',
   Array = 'array',
   Object = 'object',
-  Set = 'set'
+  Set = 'set',
+  Function = 'function'
 }
+
+export const TRANSFORM_CLASSNAME_PREFIX = 'json-html';
+export const DEFAULT_MAX_DEPTH = 2;
+export const DEFAULT_ITEM_LIMIT = 100;
+export const DEFAULT_COLLAPSE_DEPTH = 2;
+export const DEFAULT_PARSE_ITEM_CALLBACK_FACTORY =
+  (): ParseItemCallback =>
+  (v: any): any =>
+    v;
+export const DEFAULT_ON_COLLAPSE_CALLBACK_FACTORY =
+  (): OnCollapseCallback =>
+  (_v: Event, _i: HTMLElement): void => {};
 
 type GenerateElementCallback = (item: any) => HTMLElement;
 
@@ -83,7 +94,11 @@ interface BodyResult {
   body: HTMLUListElement;
 }
 
-function generateBody(parent: HTMLElement, isCollapsed: boolean): BodyResult {
+function generateBody(
+  parent: HTMLElement,
+  isCollapsed: boolean,
+  onCollapse: OnCollapseCallback
+): BodyResult {
   const container = document.createElement('div');
   const body = document.createElement('ul');
   const collapsedClassName = getClassName('collapsed');
@@ -104,6 +119,8 @@ function generateBody(parent: HTMLElement, isCollapsed: boolean): BodyResult {
     } else {
       container.classList.add(collapsedClassName);
     }
+
+    onCollapse(ev, container);
   });
 
   container.appendChild(body);
@@ -118,11 +135,12 @@ function generateArrayType(
   value: any[],
   isCollapsed: boolean,
   itemLimit: number,
+  onCollapse: OnCollapseCallback,
   generateCallback: GenerateElementCallback
 ): HTMLDivElement {
   const item = document.createElement('div');
   const startBracket = document.createElement('span');
-  const { container, body } = generateBody(item, isCollapsed);
+  const { container, body } = generateBody(item, isCollapsed, onCollapse);
   const endBracket = document.createElement('span');
 
   startBracket.classList.add(getClassName('start-bracket'));
@@ -169,12 +187,13 @@ function generateSetType(
   value: Set<any>,
   isCollapsed: boolean,
   itemLimit: number,
+  onCollapse: OnCollapseCallback,
   generateCallback: GenerateElementCallback
 ): HTMLDivElement {
   const item = document.createElement('div');
   const typeKeyword = document.createElement('span');
   const startBracket = document.createElement('span');
-  const { container, body } = generateBody(item, isCollapsed);
+  const { container, body } = generateBody(item, isCollapsed, onCollapse);
   const endBracket = document.createElement('span');
 
   typeKeyword.classList.add(getClassName('keyword'));
@@ -226,12 +245,13 @@ function generateMapType(
   value: Map<any, any>,
   isCollapsed: boolean,
   itemLimit: number,
+  onCollapse: OnCollapseCallback,
   generateCallback: GenerateElementCallback
 ): HTMLDivElement {
   const item = document.createElement('div');
   const typeKeyword = document.createElement('span');
   const startBracket = document.createElement('span');
-  const { container, body } = generateBody(item, isCollapsed);
+  const { container, body } = generateBody(item, isCollapsed, onCollapse);
   const endBracket = document.createElement('span');
 
   typeKeyword.classList.add(getClassName('keyword'));
@@ -285,11 +305,12 @@ function generateObjectType(
   value: any,
   isCollapsed: boolean,
   itemLimit: number,
+  onCollapse: OnCollapseCallback,
   generateCallback: GenerateElementCallback
 ): HTMLDivElement {
   const item = document.createElement('div');
   const startBracket = document.createElement('span');
-  const { container, body } = generateBody(item, isCollapsed);
+  const { container, body } = generateBody(item, isCollapsed, onCollapse);
   const endBracket = document.createElement('span');
 
   startBracket.classList.add(getClassName('start-bracket'));
@@ -342,6 +363,8 @@ export interface TransformOptions {
   itemLimit: number;
   collapseDepth: number;
   theme: Theme;
+  parseItem: ParseItemCallback;
+  onCollapse: OnCollapseCallback;
 }
 
 export function transform(
@@ -352,22 +375,30 @@ export function transform(
   const itemLimit = options.itemLimit || DEFAULT_ITEM_LIMIT;
   const collapseDepth = options.collapseDepth || DEFAULT_COLLAPSE_DEPTH;
   const theme = options.theme || Theme.Default;
+  const parseItem = options.parseItem || DEFAULT_PARSE_ITEM_CALLBACK_FACTORY();
+  const onCollapse =
+    options.onCollapse || DEFAULT_ON_COLLAPSE_CALLBACK_FACTORY();
   const generate = (item: any, depth: number = 0): HTMLElement => {
     const itemType = typeof item;
     const nextDepth = depth + 1;
 
     switch (itemType) {
       case SupportedTypes.Undefined:
-        return generatePrimitiveType(SupportedTypes.Undefined, item);
+        return generatePrimitiveType(SupportedTypes.Undefined, parseItem(item));
+      case SupportedTypes.Function:
+        return generatePrimitiveType(SupportedTypes.Function, parseItem(item));
       case SupportedTypes.String:
-        return generatePrimitiveType(SupportedTypes.String, item);
+        return generatePrimitiveType(SupportedTypes.String, parseItem(item));
       case SupportedTypes.Number:
-        return generatePrimitiveType(SupportedTypes.Number, item);
+        return generatePrimitiveType(SupportedTypes.Number, parseItem(item));
       case SupportedTypes.Boolean:
-        return generatePrimitiveType(SupportedTypes.Boolean, item);
+        return generatePrimitiveType(SupportedTypes.Boolean, parseItem(item));
       case SupportedTypes.Object: {
         if (item === null) {
-          return generatePrimitiveType(SupportedTypes.Null, 'null');
+          return generatePrimitiveType(
+            SupportedTypes.Null,
+            parseItem(item) || 'null'
+          );
         }
 
         const isCollapsed = collapseDepth < nextDepth;
@@ -376,39 +407,43 @@ export function transform(
         if (Array.isArray(item)) {
           if (nextDepth > maxDepth) return generateWrappedEOL('[', ']');
           return generateArrayType(
-            item,
+            parseItem(item),
             isCollapsed,
             itemLimit,
+            onCollapse,
             generateCallback
           );
         } else if (item instanceof Map) {
           if (nextDepth > maxDepth) return generateWrappedEOL('{', '}', 'Map');
           return generateMapType(
-            item,
+            parseItem(item),
             isCollapsed,
             itemLimit,
+            onCollapse,
             generateCallback
           );
         } else if (item instanceof Set) {
           if (nextDepth > maxDepth) return generateWrappedEOL('{', '}', 'Set');
           return generateSetType(
-            item,
+            parseItem(item),
             isCollapsed,
             itemLimit,
+            onCollapse,
             generateCallback
           );
         }
 
         if (nextDepth > maxDepth) return generateWrappedEOL('{', '}');
         return generateObjectType(
-          item,
+          parseItem(item),
           isCollapsed,
           itemLimit,
+          onCollapse,
           generateCallback
         );
       }
       default:
-        throw new Error(`Unexpected type.`);
+        throw new Error(`Unexpected type ${itemType}.`);
     }
   };
   const body = generate(json);

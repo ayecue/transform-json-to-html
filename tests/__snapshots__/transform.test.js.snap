@@ -800,3 +800,57 @@ exports[`transform simple 1`] = `
   </div>
 </div>
 `;
+
+exports[`transform use parseItem 1`] = `
+<div
+  class="json-html-container json-html-default"
+>
+  <div
+    class="json-html-object"
+  >
+    <span
+      class="json-html-start-bracket"
+    >
+      {
+    </span>
+    <div
+      class="json-html-body-container"
+    >
+      <ul
+        class="json-html-body"
+      >
+        <li>
+          <span
+            class="json-html-key"
+          >
+            <span
+              class="json-html-string"
+            >
+              testmodified!!!
+            </span>
+          </span>
+          <span
+            class="json-html-seperator"
+          >
+            :
+          </span>
+          <span
+            class="json-html-value"
+          >
+            <span
+              class="json-html-string"
+            >
+              wasmodified!!!
+            </span>
+          </span>
+        </li>
+      </ul>
+    </div>
+    <span
+      class="json-html-end-bracket"
+    >
+      }
+    </span>
+  </div>
+</div>
+`;
